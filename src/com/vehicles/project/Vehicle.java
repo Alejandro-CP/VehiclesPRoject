@@ -43,4 +43,8 @@ public abstract class Vehicle {
 			}
 		}
 	}
+	
+	public abstract int getFrontWheelsQuantity();
+	
+	public abstract int getRearWheelsQuantity();
 }

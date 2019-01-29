@@ -12,12 +12,12 @@ public class Main {
 			case 1:
 				System.out.println("Comencem a crear una motocicleta.");
 				Bike bike1 = createBike();
-				addVehicleWheels(bike1,2);
+				addVehicleWheels(bike1,bike1.getFrontWheelsQuantity(),bike1.getRearWheelsQuantity());
 				break;
 			case 2:
 				System.out.println("Comencem a crear un cotxe.");
 				Car car1 = createCar();
-				addVehicleWheels(car1,4);
+				addVehicleWheels(car1,car1.getFrontWheelsQuantity(),car1.getRearWheelsQuantity());
 				break;
 			default:
 				System.out.println("No es reconeix el vehicle sel·leccionat. No es pot crear cap vehicle.");
@@ -42,22 +42,29 @@ public class Main {
 		return new Bike(plate, brand, color);
 	}
 	
-	private static void addVehicleWheels(Vehicle v, int wheels) throws Exception {
-		if(wheels == 2) {
-			addBikeWheels((Bike) v);
-		}else if(wheels == 4) {
-			addCarWheels((Car) v);
+	private static void addVehicleWheels(Vehicle v, int fWheels, int rWheels) throws Exception {
+		List<Wheel> frontWheels = new ArrayList<>();
+		List<Wheel> rearWheels = new ArrayList<>();
+		
+		System.out.println("Afegim rodes traseres:");
+		addAxisWheels(rearWheels, rWheels);
+		System.out.println("Afegim rodes davanteres:");
+		addAxisWheels(frontWheels, fWheels);
+		
+		if(v instanceof Car) {
+			((Car) v).addWheels(frontWheels, rearWheels);;
+		}else if(v instanceof Bike) {
+			((Bike) v).addWheels(frontWheels, rearWheels);
 		}else {
-			throw new Exception("El número de rodes a afegir és incorrecte.");
+			throw new Exception("Vehicle no reconegut.");
 		}
 	}
 	
-	private static void addBikeWheels(Bike b) throws Exception {
-		System.out.println("Roda davantera:");
-		Wheel frontWheel = new Wheel(wheelBrand(), wheelDiameter());
-		System.out.println("Roda trasera:");
-		Wheel rearWheel = new Wheel(wheelBrand(), wheelDiameter());
-		b.addWheels(frontWheel, rearWheel);
+	private static void addAxisWheels(List<Wheel> axis, int quantity) throws Exception {
+		for(int i = 0; i < quantity; i++) {
+			System.out.println("Roda " + (i+1) + ":");
+			axis.add(new Wheel(readWheelBrand(), readWheelDiameter()));
+		}
 	}
 	
 	private static String readVehiclePlate() {
@@ -82,34 +89,12 @@ public class Main {
 		return new Car(plate, brand, color);
 	}
 	
-	private static void addCarWheels(Car c) throws Exception{
-		List <Wheel> frontWheels = new ArrayList <>();
-		List <Wheel> rearWheels = new ArrayList <>();
-		infoCarRearWheels(rearWheels);
-		infoCarFrontWheels(frontWheels);
-		c.addWheels(frontWheels, rearWheels);
-	}
-	
-	private static void infoCarFrontWheels(List <Wheel> wheels) throws Exception {
-		System.out.println("Roda davantera esquerra:");
-		wheels.add(new Wheel(wheelBrand(), wheelDiameter()));
-		System.out.println("Roda davantera dreta:");
-		wheels.add(new Wheel(wheelBrand(), wheelDiameter()));
-	}
-	
-	private static void infoCarRearWheels(List <Wheel> wheels) throws Exception {
-		System.out.println("Roda trasera esquerra:");
-		wheels.add(new Wheel(wheelBrand(), wheelDiameter()));
-		System.out.println("Roda trasera dreta:");
-		wheels.add(new Wheel(wheelBrand(), wheelDiameter()));
-	}
-	
-	private static String wheelBrand() {
+	private static String readWheelBrand() {
 		System.out.println("Introdueixi marca de la roda:");
 		return userInput.nextLine();
 	}
 	
-	private static double wheelDiameter() {
+	private static double readWheelDiameter() {
 		System.out.println("Introdueixi diametre de la roda:");
 		return Double.parseDouble(userInput.nextLine());
 	}	

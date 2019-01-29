@@ -27,5 +27,15 @@ public class Car extends Vehicle {
 		this.wheels.add(leftWheel);
 		this.wheels.add(rightWheel);
 	}
+	
+	@Override
+	public int getFrontWheelsQuantity() {
+		return 2;
+	}
+	
+	@Override
+	public int getRearWheelsQuantity() {
+		return 2;
+	}
 
 }
