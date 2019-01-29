@@ -47,6 +47,8 @@ public class Main {
 			addBikeWheels((Bike) v);
 		}else if(wheels == 4) {
 			addCarWheels((Car) v);
+		}else {
+			throw new Exception("El número de rodes a afegir és incorrecte.");
 		}
 	}
 	
