@@ -8,21 +8,20 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
+			Vehicle v;
 			switch(selectVehicle()) {
 			case 1:
 				System.out.println("Comencem a crear una motocicleta.");
-				Bike bike1 = createBike();
-				addVehicleWheels(bike1,bike1.getFrontWheelsQuantity(),bike1.getRearWheelsQuantity());
+				v = createBike();
 				break;
 			case 2:
 				System.out.println("Comencem a crear un cotxe.");
-				Car car1 = createCar();
-				addVehicleWheels(car1,car1.getFrontWheelsQuantity(),car1.getRearWheelsQuantity());
+				v = createCar();
 				break;
 			default:
-				System.out.println("No es reconeix el vehicle sel·leccionat. No es pot crear cap vehicle.");
-				break;
+				throw new Exception("No es reconeix el vehicle sel·leccionat. No es pot crear cap vehicle.");
 			}
+			addVehicleWheels(v,v.getFrontWheelsQuantity(),v.getRearWheelsQuantity());
 		} catch (Exception e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -50,14 +49,7 @@ public class Main {
 		addAxisWheels(rearWheels, rWheels);
 		System.out.println("Afegim rodes davanteres:");
 		addAxisWheels(frontWheels, fWheels);
-		
-		if(v instanceof Car) {
-			((Car) v).addWheels(frontWheels, rearWheels);;
-		}else if(v instanceof Bike) {
-			((Bike) v).addWheels(frontWheels, rearWheels);
-		}else {
-			throw new Exception("Vehicle no reconegut.");
-		}
+		v.addWheels(frontWheels, rearWheels);
 	}
 	
 	private static void addAxisWheels(List<Wheel> axis, int quantity) throws Exception {

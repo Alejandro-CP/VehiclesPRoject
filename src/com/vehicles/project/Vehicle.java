@@ -47,4 +47,6 @@ public abstract class Vehicle {
 	public abstract int getFrontWheelsQuantity();
 	
 	public abstract int getRearWheelsQuantity();
+
+	public abstract void addWheels(List<Wheel> frontWheels, List<Wheel> rearWheels) throws Exception;
 }
